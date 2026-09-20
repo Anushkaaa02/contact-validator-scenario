@@ -42,3 +42,35 @@ def test_mask_email_basic():
 
     # Assert
     assert result == "pr***@example.com"
+
+
+def test_is_valid_phone_type_error():
+    """Test that a non-string phone input raises TypeError."""
+    with pytest.raises(TypeError):
+        is_valid_phone(12345)
+
+
+def test_mask_email_invalid():
+    """Test that an invalid email raises ValueError."""
+    with pytest.raises(ValueError):
+        mask_email("not-an-email")
+
+
+def test_mask_email_short_local_part():
+    """Test masking an email with a local part of two or fewer characters."""
+    result = mask_email("a@example.com")
+
+    assert result == "a@example.com"
+
+
+def test_normalize_phone_valid():
+    """Test normalizing a dashed phone number."""
+    result = normalize_phone("555-123-4567")
+
+    assert result == "5551234567"
+
+
+def test_normalize_phone_invalid():
+    """Test that an invalid phone raises ValueError."""
+    with pytest.raises(ValueError):
+        normalize_phone("123")
